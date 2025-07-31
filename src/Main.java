@@ -47,6 +47,17 @@ public class Main {
         }
     }
 
+    private static void miniMenu(String action){
+        String input = InputHelper.textInput("- Press Enter to go back.\n- 1 for main menu.\n- 0 to exit.");
+        if (input.equals("1")) {
+            run();
+        } else if (input.equals("0")) {
+            runAction(new Option("0", "Exit"));
+        } else {
+            runAction(new Option(action, "Option"));
+        }
+    }
+
     private static Optional<Option> displayOptions(){
         System.out.println("Enter a number for the action you want to perform.");
         for(Option option: options) {
@@ -66,11 +77,11 @@ public class Main {
     private static void listProducts(){
         if (products.isEmpty()){
             System.out.println("No product has been added.\n");
-            run();
+            miniMenu("1");
         }
         showProducts(products);
 
-        run();
+        miniMenu("1");
     }
 
     private static void addProduct() {
@@ -82,14 +93,14 @@ public class Main {
 
         int quantity = InputHelper.intInput("Enter quantity");
 
-        while(quantity < 1 || quantity > 1000) {
+        while(quantity < 1 || quantity > 10_000) {
             System.out.println("Quantity must be between 1 and 1000");
             quantity = InputHelper.intInput("Enter quantity");
         }
 
         float price = InputHelper.floatInput("Enter price");
 
-        while (price < 1 || price > 1000) {
+        while (price < 1 || price > 100_000_000) {
             System.out.println("Price must be between 1 and 1000");
             price = InputHelper.floatInput("Enter price");
         }
@@ -97,7 +108,7 @@ public class Main {
         products.add(product);
 
         System.out.println(product.name + " added successfully.\n");
-        run();
+        miniMenu("2");
     }
 
     private static void searchProducts(){
@@ -110,16 +121,16 @@ public class Main {
 
         String finalSearchTerm = searchTerm;
         List<Product> searchResult = products.stream()
-            .filter(product -> product.name.contains(finalSearchTerm))
+            .filter(product -> product.name.toLowerCase().contains(finalSearchTerm.toLowerCase()))
             .toList();
 
         if (searchResult.isEmpty()) {
             System.out.println("No found product was found.\n");
-            run();
+            miniMenu("3");
         }
 
         showProducts(searchResult);
-        run();
+        miniMenu("3");
     }
 
     private static void getProduct(){
@@ -132,7 +143,7 @@ public class Main {
         if (searchedProduct.isEmpty()) {
             System.out.println("No product with the given ID was found.");
 
-            run();
+            miniMenu("4");
         }
 
         Product product = searchedProduct.get();
@@ -144,7 +155,7 @@ public class Main {
         System.out.println("PRICE: " + String.format("%-10.2f", product.price));
         System.out.println();
 
-        run();
+        miniMenu("4");
     }
 
     private static void deleteProduct(){
@@ -157,7 +168,7 @@ public class Main {
         if (searchedProduct.isEmpty()) {
             System.out.println("No product with the given ID was found.");
 
-            run();
+            miniMenu("5");
         }
 
        Product product = searchedProduct.get();
@@ -167,7 +178,7 @@ public class Main {
         System.out.printf("Product with the ID  %-36s has been successfully deleted.%n", product.id);
         System.out.println();
 
-        run();
+        miniMenu("5");
     }
 
     private static void  populateOptions(){
