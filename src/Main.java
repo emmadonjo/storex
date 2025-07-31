@@ -52,9 +52,9 @@ public class Main {
         for(Option option: options) {
             System.out.println(option.key + " - " + option.description);
         }
-        String optionKey = InputHelper.textInput("Enter an option",1, 2);
+        String optionKey = InputHelper.textInput("Enter an option");
         while (optionKey.isEmpty() || optionKey.length() > 2) {
-            optionKey = InputHelper.textInput("Enter an option",1, 2);
+            optionKey = InputHelper.textInput("Enter an option");
         }
 
         String finalOptionKey = optionKey;
@@ -74,24 +74,24 @@ public class Main {
     }
 
     private static void addProduct() {
-        String name = InputHelper.textInput("Enter product name", 4, 255);
+        String name = InputHelper.textInput("Enter product name");
         while (name.isEmpty()){
             System.out.println("Product name must be between 4 and 255 characters.");
-            name = InputHelper.textInput("Product name", 4, 255);
+            name = InputHelper.textInput("Product name");
         }
 
-        int quantity = InputHelper.intInput("Enter quantity", 1, 1000);
+        int quantity = InputHelper.intInput("Enter quantity");
 
         while(quantity < 1 || quantity > 1000) {
             System.out.println("Quantity must be between 1 and 1000");
-            quantity = InputHelper.intInput("Enter quantity", 1, 1000);
+            quantity = InputHelper.intInput("Enter quantity");
         }
 
-        float price = InputHelper.floatInput("Enter price", 1, 1000);
+        float price = InputHelper.floatInput("Enter price");
 
         while (price < 1 || price > 1000) {
             System.out.println("Price must be between 1 and 1000");
-            price = InputHelper.floatInput("Enter price", 1, 1000);
+            price = InputHelper.floatInput("Enter price");
         }
         Product product = new Product(uniqueId(), name, quantity, price);
         products.add(product);
@@ -101,11 +101,11 @@ public class Main {
     }
 
     private static void searchProducts(){
-        String searchTerm = InputHelper.textInput("Enter search term", 2, 255);
+        String searchTerm = InputHelper.textInput("Enter search term");
 
         while(searchTerm.isEmpty()) {
             System.out.println("Enter a valid search term.");
-            searchTerm = InputHelper.textInput("Enter search term", 2, 255);
+            searchTerm = InputHelper.textInput("Enter search term");
         }
 
         String finalSearchTerm = searchTerm;
@@ -123,7 +123,7 @@ public class Main {
     }
 
     private static void getProduct(){
-        String productId = InputHelper.textInput("Product ID", 36, 40);
+        String productId = InputHelper.textInput("Product ID");
 
         Optional<Product> searchedProduct = products.stream()
             .filter(p -> p.id.equals(productId))
@@ -148,7 +148,7 @@ public class Main {
     }
 
     private static void deleteProduct(){
-        String productId = InputHelper.textInput("Product ID", 36, 40);
+        String productId = InputHelper.textInput("Product ID");
 
         Optional<Product> searchedProduct = products.stream()
             .filter(p -> p.id.equals(productId))
